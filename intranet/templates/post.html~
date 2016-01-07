@@ -1,0 +1,5 @@
+<form method="post" action="">
+	{% crsf_token %}
+	{{ form.as_p }}
+	<input type="submit" class="btn-success btn" value="Post">
+</form>

@@ -1,0 +1,46 @@
+{%load staticfiles %}
+<form id="postform" method="post" action="">
+	{% csrf_token %}
+	{{ form.as_p }}
+	<input type="submit" class="btn-success btn" value="Post">
+</form>
+{% for post in posts %}	
+		<div class="post-wrapper">
+			<div class="post-capsule">
+			   <div class="row">
+				<div class="dp-thumbnail col-lg-1 col-md-1 col-sm-1 col-xs-1">
+						<img src="{% static 'intranet/images/01.jpg' %}">
+				</div>
+				<div class="post-title col-lg-11 col-md-11 col-xs-11 col-sm-11">
+						<span class="post-title-text">{{ post.title }}<span>	
+				</div>
+			   </div>
+			   <div class="row">		
+				<span class="post-author">Posted by <a class="text-success">{{ post.author.get_full_name }}</a></span>
+				{% if post.if_image %}				
+					<div class="post-img">
+						<img src="{% static 'intranet/images/01.jpg' %}">
+					</div>
+				{% endif %}
+			    </div>
+			    <div class="row">	
+				<div class="post-content">
+					{{ post.content | linebreaks }}
+				</div>
+			    </div>		
+			</div>
+			{% ifequal post.comments_nothing_yet True %}
+				<center class="text-muted">{{ nothing_yet.post_comments_message }}</center>
+			{% endifequal %}
+			{% ifequal post.comments_nothing_yet False %}
+			{% for comment in post.comments %}
+				<div class="message-wrapper">
+					<div class="message-capsule">
+									
+					</div>
+				</div>				
+			{% endfor %}
+			{% endifequal %}
+		</div>
+	    {% endfor %}
+	    

@@ -1,0 +1,71 @@
+{% load staticfiles %}
+{% include 'head.html' %}
+<body>
+	<div id="navbar">
+	{% block navbar %} 
+	<div id="nav-1" class="container-fluid">
+		<span class="header-text">IIIT-S Intranet</span>
+		{% for item in section_items %}		
+		  <a href="{{ item.url }}"><span class="section-text pull-right">{{ item.name }}</span></a>
+		{% endfor %}
+	</div>
+	
+	<div id="nav-2" class="container-fluid">
+		<div class="col-lg- 6 col-md-6 col-sm-7 col-xs-7">
+			<span class="page-header-text pull-right">
+				{{ pagetitle }}
+			</span>
+		</div>
+		{% if user.is_authenticated %}
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			    <span class="pull-right username-display" style="margin-top:18px;">
+			    	<i class="fa fa-cog"></i>
+			    </span>
+				<span class="pull-right username-display">{{ user.get_full_name }}</span>				
+			</div>
+		{% endif %}
+	</div>
+	{% endblock %}
+	{% block leftnavbar %}
+	<div id="leftnavbar" class="col-lg-2 col-sm-2 col-xs-2 col-md-2">
+		<div class="row">
+			<ul>
+			{% for leftlink in leftlinks %}
+				<li>	
+					<i class="fa fa-{{leftlink.icon}}"></i>
+
+					<a href="{{ leftlink.url }}">{{ leftlink.name }}</a>
+				</li>
+			{% endfor %}
+			</ul>
+		</div>	
+	</div>
+	{% endblock %}
+	
+	<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
+		{% block contentwrapper %}	
+		<div id="contentwrapper" class="col-lg-10 col-sm-10 col-xs-10 col-md-10">
+			{% if user.is_authenticated %}
+				{% include 'home.html' %}
+			{% endif %}
+			{% if not user.is_authenticated %}
+				{% include 'login.html' %}
+			{% endif %}
+		</div>
+		{% endblock %}
+		{% block linksbox %}
+	
+		<div id="linksbox" class="col-lg-2 col-sm-2 col-md-2 col-xs-2">
+			<div id="linksbox-header"><center>Links</center></div>
+			<ul>
+			{% for link in links %}
+				<li>
+					<i class="fa fa-folder-open"></i>
+					<a href="{{ link.url }}">{{ link.name }}</a>		
+				</li>
+			{% endfor %}
+			</ul>
+		</div>
+		{% endblock %}
+	</div>
+</body>

@@ -1,0 +1,37 @@
+{% load staticfiles %}
+<script src="/static/intranet/js/formvalidation.js"></script>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+	{% if form.errors %}
+	  {{form.non_field_errors}}
+	 {%endif%}
+	<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 mast">
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ">
+			<center class="col-lg-12 col-sm-12 col-xs-12 col-md-12 mast-header">
+				<center>Please login</center>
+			</center>
+			<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 mast-body">
+				<form id="loginform" method="post" action="">
+					{% csrf_token %}
+					<div class="form-group margin-top-15">
+						<label for="username">Email</label>
+			        		{{ form.username }}
+  					</div>
+					<div class="form-group">
+						<label for="password">Password</label>
+			        		{{ form.password }}
+  					</div>
+					<button type="submit" class="form-control btn-green btn">Login to Intranet</button>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+	
+</div>

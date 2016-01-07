@@ -1,0 +1,150 @@
+#nav-1{
+	min-height:10vh;
+	background:#26734d;
+	padding-top: 1%;
+	position: fixed;
+    	min-width: 100vw;
+	z-index:200;
+	
+}
+#nav-2{
+	min-height: 5vh;
+    	background: #66cc9a;
+    	position: fixed;
+	min-width: 100vw;
+	z-index:200;
+	margin-top:10vh;
+}
+#contentwrapper{
+	margin-top:25vh;
+}
+.header-text{
+	text-shadow: 1px 1px 1px #444;
+    	letter-spacing: 2px;
+	color:white;
+	font-size:24px;
+}
+
+.section-text{
+	font-size:18px;
+	color:white;
+	text-shadow: 1px 1px 1px #444;
+	text-transform: uppercase;
+    	padding: 0px 12px;
+	font-weight:600;
+	text-decoration:none;
+
+}
+.section-text:hover{
+	
+	text-transform: uppercase;
+	text-decoration:none;
+    	padding: 0px 12px;
+	font-weight:600;
+	border-bottom:5px solid;
+	cursor:pointer;
+}
+.page-header-text{
+	color:white;
+	font-size: 28px;
+}
+#linksbox{
+	margin:25vh 0%;	
+	background:#d9f2e6;
+	padding-left: 0px !important;
+	padding-right: 0px !important;
+	padding-bottom:15px;
+}
+#linksbox ul li{
+	color:black;	
+	list-style:none;
+}
+#linksbox ul li a{
+	color:black;
+}
+#linksbox-header{
+	color:white;
+	text-shadow:1px 1px 1px #444;
+	background:#26734d;
+	padding-left:0px !important;
+	padding-right:0px !important;
+	min-width:100%;
+	max-width:100%;
+	margin-bottom:15px;
+}
+
+#leftnavbar{
+	background: #d9f2e6;
+    	min-height: 100vh;
+    	height: auto;
+    	padding-top: 25vh;
+    	position: fixed;
+    	z-index: 100;
+}
+#leftnavbar ul li{
+	color:black;	
+	list-style:none;
+	font-size:15px;
+}
+#leftnavbar ul li a{
+	color:black;
+}
+.btn-green{
+	color:white;
+	background-color:#26734D;
+}
+.btn-green:hover{
+	color:white;
+	background-color:#66CC9A;
+}
+.mast{
+	margin-top:40px;
+	margin-bottom:20px;
+}
+.mast-header{
+	background:#26734d;
+	padding: 5px 0px;
+	color: white;
+	text-shadow: 1px 1px 1px #444;
+}
+.mast-body{
+	border: 1px solid  #26734D;
+}
+.margin-top-15{
+	margin-top:15px;
+}
+.username-display{
+	margin-top: 15px;
+ 	color: white;
+        padding-left: 6px;
+}
+.post-center{
+	padding: 15px 20px;
+}
+.post-title{
+	display:block;
+}
+.post-title-text{
+	font-size:22px;
+}
+.post-author{
+	font-size:10px;
+	display:block;
+	margin-bottom: 10px;
+}
+.dp-thumbnail img{
+	width: 50px;
+	height: 50px;
+    	border-bottom-left-radius: 8px;
+    	border-bottom-right-radius: 8px;
+    	border-top-left-radius: 8px;
+    	border-top-right-radius: 8px;
+    	margin-left: -15px;
+    	margin-bottom: 10px;
+}
+.post-img img{
+	width: 80%;
+    	height: auto;
+    	border: 7px solid silver;
+    	border-radius: 12px;
+}

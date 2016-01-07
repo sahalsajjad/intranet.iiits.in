@@ -1,0 +1,27 @@
+{% load staticfiles %}
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+	<div class="col-xs-offset-4 col-sm-offset-4 col-md-offset-4 col-lg-offset-4 mast">
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ">
+			<center class="col-lg-12 col-sm-12 col-xs-12 col-md-12 mast-header">
+				<center>Please login</center>
+			</center>
+			<div class="col-lg-12 col-sm-12 col-xs-12 col-md-12 mast-body">
+				<form>
+					{% csrf_token %}
+					<div class="form-group margin-top-15">
+						<label for="exampleInputEmail1">Username</label>
+			        		{{ form.username }}
+  					</div>
+					<div class="form-group">
+						<label for="exampleInputEmail1">Password</label>
+			        		{{ form.password }}
+  					</div>
+					<button type="submit" class="form-control btn-green btn">Login to Intranet</button>
+				</form>
+				
+			</div>
+		</div>
+	</div>
+	
+</div>
