@@ -35,7 +35,7 @@ class PostForm(forms.Form):
 								'placeholder':'What\'s the post about ? ...',
 								'rows':'5'
 						}))
-	image = forms.ImageField(widget=forms.ClearableFileInput(attrs={
+	image = forms.ImageField(widget=forms.FileInput(attrs={
 								'class':'form-control file'	
 						}), required=False)
 	

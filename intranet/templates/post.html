@@ -1,9 +1,13 @@
 {%load staticfiles %}
-<form id="postform" method="post" action="">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" class="btn-success btn" value="Post">
-</form>
+<div class="post-form-container">	
+	<form enctype="multipart/form-data" id="postform" method="post" action="">
+		{% csrf_token %}
+		{{ form.title}}
+		{{ form.content}}
+		{{ form.image}}
+		<input type="submit" class="btn-green-square btn" value="Post">
+	</form>
+</div>	
 {% for post in posts %}	
 		<div class="post-wrapper">
 			<div class="post-capsule">
@@ -19,7 +23,7 @@
 				<span class="post-author">Posted by <a class="text-success">{{ post.author.get_full_name }}</a></span>
 				{% if post.if_image %}				
 					<div class="post-img">
-						<img src="{% static 'intranet/images/01.jpg' %}">
+						<img src="{{post.image.url}}">
 					</div>
 				{% endif %}
 			    </div>

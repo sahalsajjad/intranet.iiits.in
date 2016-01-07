@@ -115,7 +115,7 @@ SERVE_MEDIA = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR,'static/')
+STATIC_ROOT = os.path.join(BASE_DIR,'/intranet/static/')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/intranet/files')
 

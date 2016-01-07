@@ -56,7 +56,7 @@ class PostPageView(FormView):
 		redirect_to = self.success_url
 		title = form.cleaned_data['title']
 		content = form.cleaned_data['content']
-		image = form.cleaned_data.get('image')
+		image = self.request.FILES.get('image')
 		print "Image" + str(image)
 		if_image = True
 		messages.add_message(self.request, messages.INFO, image)
@@ -84,7 +84,7 @@ class PostPageView(FormView):
 			   'links': Link.objects.order_by('rank'),
 			   'leftlinks':LeftLink.objects.order_by('rank'),
 			   'pagetitle':'Home',
-			   'form':PostForm,
+			   'form':PostForm(self.request.POST, self.request.FILES),
 			   'posts':Post.objects.order_by('created_on')				
 		} 
 		return context
