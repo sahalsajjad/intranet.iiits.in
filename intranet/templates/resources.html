@@ -7,18 +7,16 @@
 	    		{% ifequal nothing_yet.post True %}
 					<center class="text-muted">{{ nothing_yet.post_message }}</center>
 	    		{% endifequal %}
-				<center class="post-form-container-header">What's new ? Post it!</center>
-				<div class="post-form-container">
-						
+	    		<center class="post-form-container-header">Add a resource file!</center>
+				<div class="post-form-container">	
 					<form enctype="multipart/form-data" id="postform" method="post" action="">
 						{% csrf_token %}
 						{{ form.title}}
-						{{ form.content}}
-						{{ form.image}}
+						{{ form.file_upload}}
 						<input type="submit" class="btn-green-square btn" value="{{submit_text}}">
 					</form>
 				</div>	
-				{% for post in posts %}	
+				{% for resource in resources %}	
 					<div class="post-wrapper">
 						<div class="post-capsule">
 					   		<div class="row">
@@ -39,33 +37,23 @@
 					    	</div>
 					    	<div class="row">	
 								<div class="post-content">
-									{{ post.content | linebreaks | truncatechars:255 }}
+									{{ post.content | linebreaks }}
 								</div>
 					    	</div>		
 						</div>
-						<hr>
-						<center><a id="show-comments-{{post.id}}" class="show-comments"  onclick="showComments({{post.id}})">Show Comments</a></center>
-						<div id="comments-{{post.id}}" class="comments-box">
-							<form method="post" action"." id="comment-form" data="{{post.id}}">
-                                                	{% csrf_token %} 
-							{{ commentform.comment }}
-							<input type="submit" class="btn btn-green-square" onclick="comment_to_post({{post.id}})" value="comment">
-                                                	</form>
-							{% ifequal post.comments_nothing_yet True %}
-								<center class="text-muted">{{ nothing_yet.post_comments_message }}</center>
-							{% endifequal %}
-							{% ifequal post.comments_nothing_yet False %}
-								{% for comment in post.comments %}
-									<div class="message-wrapper">
-										<div class="message-capsule">
-											{{ comment.comment }}	
-										</div>
-									</div>				
-								{% endfor %}
-							{% endifequal %}
-						</div>	
-						<center><a id="hide-comments-{{post.id}}" class="hide-comments"  onclick="hideComments({{post.id}})">Hide Comments</a></center>			
-					</div>	
+						{% ifequal post.comments_nothing_yet True %}
+							<center class="text-muted">{{ nothing_yet.post_comments_message }}</center>
+						{% endifequal %}
+						{% ifequal post.comments_nothing_yet False %}
+							{% for comment in post.comments %}
+								<div class="message-wrapper">
+									<div class="message-capsule">
+											
+									</div>
+								</div>				
+							{% endfor %}
+						{% endifequal %}
+					</div>
     			{% endfor %}
     		</div>
     	</div>

@@ -27,7 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'intranet',	
+    'intranet',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -50,11 +50,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
-                'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-            ],
+  	     ],
         },
     },
 ]
@@ -123,6 +122,6 @@ MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/posts/'
 
-LOGIN_URL = '/'
+LOGIN_URL = '/accounts/login/'
 
 LOGOUT_URL = LOGIN_REDIRECT_URL

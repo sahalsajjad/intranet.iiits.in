@@ -16,10 +16,14 @@
 				{{ pagetitle }}
 			</span>
 		</div>
-		<div class="col-lg-5 col-md-5 col-sm-5">
-			<span class="pull-right username-display"><i class="fa fa-cog"></i></span>
-			<span class="pull-right username-display">{{ user.get_full_name }}</span>				
-		</div>
+		{% if user.is_authenticated %}
+			<div class="col-lg-5 col-md-5 col-sm-5">
+			    <span class="pull-right username-display" style="margin-top:18px;">
+			    	<i class="fa fa-cog"></i>
+			    </span>
+				<span class="pull-right username-display">{{ user.get_full_name }}</span>				
+			</div>
+		{% endif %}
 	</div>
 	{% endblock %}
 	{% block leftnavbar %}
@@ -41,12 +45,8 @@
 	<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
 		{% block contentwrapper %}	
 		<div id="contentwrapper" class="col-lg-10 col-sm-10 col-xs-10 col-md-10">
-			{% if user.is_authenticated %}
-				{% include 'home.html' %}
-			{% endif %}
-			{% if not user.is_authenticated %}
-				{% include 'login.html' %}
-			{% endif %}
+			
+			
 		</div>
 		{% endblock %}
 		{% block linksbox %}

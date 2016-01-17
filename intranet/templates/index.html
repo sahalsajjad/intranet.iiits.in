@@ -1,6 +1,6 @@
 {% load staticfiles %}
 {% include 'head.html' %}
-<body>
+<body id="intranet-body">
 	<div id="navbar">
 	{% block navbar %} 
 	<div id="nav-1" class="container-fluid">
@@ -45,12 +45,8 @@
 	<div class="col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
 		{% block contentwrapper %}	
 		<div id="contentwrapper" class="col-lg-10 col-sm-10 col-xs-10 col-md-10">
-			{% if user.is_authenticated %}
-				{% include 'home.html' %}
-			{% endif %}
-			{% if not user.is_authenticated %}
-				{% include 'login.html' %}
-			{% endif %}
+			
+			
 		</div>
 		{% endblock %}
 		{% block linksbox %}

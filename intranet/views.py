@@ -1,8 +1,8 @@
 from django.views.generic.base import TemplateView, RedirectView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, View
 from django.shortcuts import resolve_url
-from intranet.models import Section, Link, LeftLink, Post
-from intranet.forms import LoginForm , PostForm, SuggestionForm, NewsForm, ResourceAddForm, NoticeForm
+from intranet.models import Section, Link, LeftLink, Post, News, Suggestion, Notice, Resource
+from intranet.forms import LoginForm , PostForm, SuggestionForm, NewsForm, ResourceAddForm, NoticeForm, CommentForm
 from intranet import names 
 from django.conf import settings
 from django.views.decorators.debug import sensitive_post_parameters
@@ -13,9 +13,11 @@ from django.contrib.auth.views import password_change, password_change_done
 from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+import json
+from django.http import HttpResponse
 
-class HomePageView(FormView):
-	template_name = 'index.html'
+class LoginView(FormView):
+	template_name = 'login.html'
 	success_url = settings.LOGIN_REDIRECT_URL
 	form_class = LoginForm
 		
@@ -27,14 +29,30 @@ class HomePageView(FormView):
         	return HttpResponseRedirect(redirect_to) 
 	
 	def form_invalid(self,form):	
-		return super(HomePageView, self).form_invalid(form)
+		return super(LoginView, self).form_invalid(form)
 	@method_decorator(sensitive_post_parameters())	
 	def dispatch(self, *args, **kwargs):
 		if self.request.user.is_active:
 			return HttpResponseRedirect(names.urls['posts'])
-		return super(HomePageView,self).dispatch(*args, **kwargs)
+		return super(LoginView,self).dispatch(*args, **kwargs)
 
 	def get_context_data(self,**kwargs):
+		context = super(LoginView,self).get_context_data(**kwargs)
+		context = {
+			   'title':'IIIT-S Intranet',	
+			   'section_items': Section.objects.order_by('-rank'),
+			   'links': Link.objects.order_by('rank'),
+			   'leftlinks':LeftLink.objects.order_by('rank'),
+			   'pagetitle':'Login',
+			   'form':LoginForm(self.request.POST)				
+		}
+		
+		return context
+class HomePageView(TemplateView):
+	template_name = 'index.html'
+	
+	def get_context_data(self, **kwargs):
+		
 		context = super(HomePageView,self).get_context_data(**kwargs)
 		context = {
 			   'title':'IIIT-S Intranet',	
@@ -42,24 +60,23 @@ class HomePageView(FormView):
 			   'links': Link.objects.order_by('rank'),
 			   'leftlinks':LeftLink.objects.order_by('rank'),
 			   'pagetitle':'Home',
-			   'form':LoginForm				
+			  				
 		}
 		
 		return context
-
-class PostPageView(FormView):
-	template_name = 'index.html' 
-	success_url = names.urls['posts']
+class PostPageView( FormView):
+	template_name = 'post.html' 
 	form_class = PostForm
+	success_url = names.urls['posts']
 	
 	def form_valid(self,form):
 		redirect_to = self.success_url
 		title = form.cleaned_data['title']
 		content = form.cleaned_data['content']
 		image = self.request.FILES.get('image')
-		print "Image" + str(image)
+		
 		if_image = True
-		messages.add_message(self.request, messages.INFO, image)
+		
 		if image == None:
 			if_image = False
 		post = Post(title = title, 
@@ -83,9 +100,11 @@ class PostPageView(FormView):
 			   'section_items': Section.objects.order_by('-rank'),
 			   'links': Link.objects.order_by('rank'),
 			   'leftlinks':LeftLink.objects.order_by('rank'),
-			   'pagetitle':'Home',
+			   'pagetitle':'Posts',
 			   'form':PostForm(self.request.POST, self.request.FILES),
-			   'posts':Post.objects.order_by('created_on')				
+			   'posts':Post.objects.order_by('created_on'),
+			   'submit_text':'Post',
+                           'commentform':CommentForm					
 		} 
 		return context
 
@@ -106,7 +125,14 @@ class NewsPageView(FormView):
 	def get_context_data(self, **kwargs):
 		context = super(NewsPageView,self).get_context_data(**kwargs)
 		context = {
-			'':Section.objects.order_by('rank'),		
+			   'title':'IIIT-S Intranet',	
+			   'section_items': Section.objects.order_by('-rank'),
+			   'links': Link.objects.order_by('rank'),
+			   'leftlinks':LeftLink.objects.order_by('rank'),
+			   'pagetitle':'News',
+			   'form':NewsForm(self.request.POST, self.request.FILES),
+			   'news':News.objects.order_by('created_on'),
+			   'submit_text':'Post News'		
 		} 
 		return context
 
@@ -116,7 +142,7 @@ class NoticePageView(FormView):
 	success_url = names.urls['notices']
 	form_class = NoticeForm
 	
-	def form_valid(self,Form):
+	def form_valid(self,form):
 		redirect_to = success_url
 		return HttpResponseRedirect(redirect_to)
 	def form_invalid(self,form):
@@ -128,7 +154,14 @@ class NoticePageView(FormView):
 	def get_context_data(self, **kwargs):
 		context = super(NoticePageView,self).get_context_data(**kwargs)
 		context = {
-						
+			   'title':'IIIT-S Intranet',	
+			   'section_items': Section.objects.order_by('-rank'),
+			   'links': Link.objects.order_by('rank'),
+			   'leftlinks':LeftLink.objects.order_by('rank'),
+			   'pagetitle':'Notices',
+			   'form':NoticeForm(self.request.POST, self.request.FILES),
+			   'notices':Notice.objects.order_by('created_on'),
+			   'submit_text':'Post'				
 		} 
 		return context
 
@@ -150,7 +183,14 @@ class SuggestionsPageView(FormView):
 	def get_context_data(self, **kwargs):
 		context = super(SuggestionsPageView,self).get_context_data(**kwargs)
 		context = {
-						
+			   'title':'IIIT-S Intranet',	
+			   'section_items': Section.objects.order_by('-rank'),
+			   'links': Link.objects.order_by('rank'),
+			   'leftlinks':LeftLink.objects.order_by('rank'),
+			   'pagetitle':'Suggestions',
+			   'form':SuggestionForm(self.request.POST, self.request.FILES),
+			   'suggestions':Suggestion.objects.order_by('created_on'),
+			   'submit_text':'Suggest it'				
 		} 
 		return context
 
@@ -172,6 +212,13 @@ class ResourcesPageView(FormView):
 	def get_context_data(self, **kwargs):
 		context = super(ResourcesPageView,self).get_context_data(**kwargs)
 		context = {
-						
+			   'title':'IIIT-S Intranet',	
+			   'section_items': Section.objects.order_by('-rank'),
+			   'links': Link.objects.order_by('rank'),
+			   'leftlinks':LeftLink.objects.order_by('rank'),
+			   'pagetitle':'Resources',
+			   'form':ResourceAddForm(self.request.POST, self.request.FILES),
+			   'resources':Resource.objects.order_by('created_on'),
+			   'submit_text':'Add Resource + Submit'			
 		} 
 		return context

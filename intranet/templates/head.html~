@@ -9,5 +9,5 @@
 	<script src="{% static 'intranet/js/jquery.min.js' %}"></script>
 	<script src="{% static 'intranet/js/bootstrap.min.js' %}"></script>
 	<script src="{% static 'intranet/js/script.js' %}"></script>
-	<script src="{% static 'intranet/js/jquery.inputfile.js' %}"></script>
+
 </head>

@@ -29,11 +29,6 @@ $(document).ready(function(){
 		$("#comments-"+postid).hide();
 		$(".hide-comments").hide();
 	}
-	$('#post-form').on('submit', function(event){
-    		event.preventDefault();
-    		console.log("form submitted!")  // sanity check
-    		create_post();
-	});
 	window.comment_to_post = function(post_id){
 		$.ajax({
         		url : "/comment_to_posts/", // the endpoint
